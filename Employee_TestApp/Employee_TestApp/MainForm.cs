@@ -9,7 +9,10 @@ namespace Employee_TestApp
         public MainForm()
         {
             InitializeComponent();
-            DBWorker.GetActualData(AddDGV);
+            
+            if (new ConnectionForm().ShowDialog() == DialogResult.Cancel)
+                Environment.Exit(0);
+            DbWorker.GetActualData(AddDGV);
         }
 
 
@@ -29,7 +32,7 @@ namespace Employee_TestApp
             if (e.RowIndex == -1) return;
             if (e.ColumnIndex == EmployeeDGV.Columns.Count-1)
             {
-                DBWorker.DeleteData("Employees", "employee_id", EmployeeDGV.Rows[e.RowIndex].Cells[0].Value.ToString());
+                DbWorker.DeleteData("Employees", "employee_id", EmployeeDGV.Rows[e.RowIndex].Cells[0].Value.ToString());
                 EmployeeDGV.Rows.RemoveAt(e.RowIndex);
                 return;
             }
@@ -46,7 +49,7 @@ namespace Employee_TestApp
             
             EmployeeDGV.Rows.Clear();
             EmployeeDGV.Update();
-            DBWorker.GetActualData(AddDGV);
+            DbWorker.GetActualData(AddDGV);
         }
 
         private void AddEmployee_Click(object sender, EventArgs e)
@@ -56,14 +59,14 @@ namespace Employee_TestApp
             ef.ShowDialog();
             EmployeeDGV.Rows.Clear();
             EmployeeDGV.Update();
-            DBWorker.GetActualData(AddDGV);
+            DbWorker.GetActualData(AddDGV);
         }
 
         private void SearchButton_Click(object sender, EventArgs e)
         {
             EmployeeDGV.Rows.Clear();
             EmployeeDGV.Update();
-            DBWorker.GetFilteredData(AddDGV, SearchTextbox.Text);
+            DbWorker.GetFilteredData(AddDGV, SearchTextbox.Text);
         }
     }
 }
