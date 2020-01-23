@@ -8,3 +8,14 @@
 \\msk.mts.ru\ug\User\Folders\06\00\napopo20\My Documents\GitKraken\EmployeeDemo\RSHB_TestApp\RSHB_TestApp\obj\Debug\Employee_TestApp.EmployeeForm.resources
 \\msk.mts.ru\ug\User\Folders\06\00\napopo20\My Documents\GitKraken\EmployeeDemo\RSHB_TestApp\RSHB_TestApp\obj\Debug\Employee_TestApp.MainForm.resources
 \\msk.mts.ru\ug\User\Folders\06\00\napopo20\My Documents\GitKraken\EmployeeDemo\RSHB_TestApp\RSHB_TestApp\obj\Debug\Employee_TestApp.csprojAssemblyReference.cache
+\\msk.mts.ru\ug\User\Folders\06\00\napopo20\My Documents\GitKraken\EmployeeDemo\Employee_TestApp\Employee_TestApp\bin\Debug\Employee_TestApp.exe.config
+\\msk.mts.ru\ug\User\Folders\06\00\napopo20\My Documents\GitKraken\EmployeeDemo\Employee_TestApp\Employee_TestApp\bin\Debug\Employee_TestApp.exe
+\\msk.mts.ru\ug\User\Folders\06\00\napopo20\My Documents\GitKraken\EmployeeDemo\Employee_TestApp\Employee_TestApp\bin\Debug\Employee_TestApp.pdb
+\\msk.mts.ru\ug\User\Folders\06\00\napopo20\My Documents\GitKraken\EmployeeDemo\Employee_TestApp\Employee_TestApp\obj\Debug\Employee_TestApp.EmployeeForm.resources
+\\msk.mts.ru\ug\User\Folders\06\00\napopo20\My Documents\GitKraken\EmployeeDemo\Employee_TestApp\Employee_TestApp\obj\Debug\Employee_TestApp.MainForm.resources
+\\msk.mts.ru\ug\User\Folders\06\00\napopo20\My Documents\GitKraken\EmployeeDemo\Employee_TestApp\Employee_TestApp\obj\Debug\Employee_TestApp.Properties.Resources.resources
+\\msk.mts.ru\ug\User\Folders\06\00\napopo20\My Documents\GitKraken\EmployeeDemo\Employee_TestApp\Employee_TestApp\obj\Debug\Employee_TestApp.csproj.GenerateResource.cache
+\\msk.mts.ru\ug\User\Folders\06\00\napopo20\My Documents\GitKraken\EmployeeDemo\Employee_TestApp\Employee_TestApp\obj\Debug\Employee_TestApp.exe
+\\msk.mts.ru\ug\User\Folders\06\00\napopo20\My Documents\GitKraken\EmployeeDemo\Employee_TestApp\Employee_TestApp\obj\Debug\Employee_TestApp.pdb
+\\msk.mts.ru\ug\User\Folders\06\00\napopo20\My Documents\GitKraken\EmployeeDemo\Employee_TestApp\Employee_TestApp\obj\Debug\Employee_TestApp.ConnectionForm.resources
+\\msk.mts.ru\ug\User\Folders\06\00\napopo20\My Documents\GitKraken\EmployeeDemo\Employee_TestApp\Employee_TestApp\obj\Debug\Employee_TestApp.csprojAssemblyReference.cache

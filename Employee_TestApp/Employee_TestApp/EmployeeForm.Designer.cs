@@ -45,6 +45,11 @@
             this.DateToTextbox = new System.Windows.Forms.TextBox();
             this.DateToLabel = new System.Windows.Forms.Label();
             this.GenderCombobox = new System.Windows.Forms.ComboBox();
+            this.phoneTextBox = new System.Windows.Forms.TextBox();
+            this.phoneLabel = new System.Windows.Forms.Label();
+            this.phoneTypeCBox = new System.Windows.Forms.ComboBox();
+            this.phoneTypeLabel = new System.Windows.Forms.Label();
+            this.sevenLable = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // FullNameLable
@@ -78,6 +83,7 @@
             this.BirthDateTextbox.Name = "BirthDateTextbox";
             this.BirthDateTextbox.Size = new System.Drawing.Size(99, 20);
             this.BirthDateTextbox.TabIndex = 5;
+            this.BirthDateTextbox.TextChanged += new System.EventHandler(this.BirthDateTextbox_TextChanged);
             // 
             // BirthDateLabel
             // 
@@ -91,7 +97,7 @@
             // SaveButton
             // 
             this.SaveButton.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.SaveButton.Location = new System.Drawing.Point(0, 191);
+            this.SaveButton.Location = new System.Drawing.Point(0, 197);
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.Size = new System.Drawing.Size(313, 23);
             this.SaveButton.TabIndex = 6;
@@ -102,9 +108,11 @@
             // SeriesTextbox
             // 
             this.SeriesTextbox.Location = new System.Drawing.Point(71, 91);
+            this.SeriesTextbox.MaxLength = 4;
             this.SeriesTextbox.Name = "SeriesTextbox";
             this.SeriesTextbox.Size = new System.Drawing.Size(77, 20);
             this.SeriesTextbox.TabIndex = 8;
+            this.SeriesTextbox.TextChanged += new System.EventHandler(this.SeriesTextbox_TextChanged);
             // 
             // SeriesLabel
             // 
@@ -118,9 +126,11 @@
             // NumberTextbox
             // 
             this.NumberTextbox.Location = new System.Drawing.Point(201, 91);
+            this.NumberTextbox.MaxLength = 6;
             this.NumberTextbox.Name = "NumberTextbox";
             this.NumberTextbox.Size = new System.Drawing.Size(99, 20);
             this.NumberTextbox.TabIndex = 10;
+            this.NumberTextbox.TextChanged += new System.EventHandler(this.NumberTextbox_TextChanged);
             // 
             // DocTypeLabel
             // 
@@ -154,6 +164,7 @@
             this.DateFromTextbox.Name = "DateFromTextbox";
             this.DateFromTextbox.Size = new System.Drawing.Size(217, 20);
             this.DateFromTextbox.TabIndex = 15;
+            this.DateFromTextbox.TextChanged += new System.EventHandler(this.DateFromTextbox_TextChanged);
             // 
             // DatefromLabel
             // 
@@ -170,6 +181,7 @@
             this.DateToTextbox.Name = "DateToTextbox";
             this.DateToTextbox.Size = new System.Drawing.Size(195, 20);
             this.DateToTextbox.TabIndex = 17;
+            this.DateToTextbox.TextChanged += new System.EventHandler(this.DateToTextbox_TextChanged);
             // 
             // DateToLabel
             // 
@@ -191,11 +203,59 @@
             this.GenderCombobox.Size = new System.Drawing.Size(35, 21);
             this.GenderCombobox.TabIndex = 18;
             // 
+            // phoneTextBox
+            // 
+            this.phoneTextBox.Location = new System.Drawing.Point(83, 169);
+            this.phoneTextBox.Name = "phoneTextBox";
+            this.phoneTextBox.Size = new System.Drawing.Size(84, 20);
+            this.phoneTextBox.TabIndex = 20;
+            this.phoneTextBox.TextChanged += new System.EventHandler(this.phoneTextBox_TextChanged);
+            // 
+            // phoneLabel
+            // 
+            this.phoneLabel.AutoSize = true;
+            this.phoneLabel.Location = new System.Drawing.Point(5, 172);
+            this.phoneLabel.Name = "phoneLabel";
+            this.phoneLabel.Size = new System.Drawing.Size(52, 13);
+            this.phoneLabel.TabIndex = 19;
+            this.phoneLabel.Text = "Телефон";
+            // 
+            // phoneTypeCBox
+            // 
+            this.phoneTypeCBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.phoneTypeCBox.Location = new System.Drawing.Point(201, 169);
+            this.phoneTypeCBox.Name = "phoneTypeCBox";
+            this.phoneTypeCBox.Size = new System.Drawing.Size(99, 21);
+            this.phoneTypeCBox.TabIndex = 21;
+            // 
+            // phoneTypeLabel
+            // 
+            this.phoneTypeLabel.AutoSize = true;
+            this.phoneTypeLabel.Location = new System.Drawing.Point(169, 172);
+            this.phoneTypeLabel.Name = "phoneTypeLabel";
+            this.phoneTypeLabel.Size = new System.Drawing.Size(26, 13);
+            this.phoneTypeLabel.TabIndex = 22;
+            this.phoneTypeLabel.Text = "Тип";
+            // 
+            // sevenLable
+            // 
+            this.sevenLable.AutoSize = true;
+            this.sevenLable.Location = new System.Drawing.Point(63, 172);
+            this.sevenLable.Name = "sevenLable";
+            this.sevenLable.Size = new System.Drawing.Size(19, 13);
+            this.sevenLable.TabIndex = 23;
+            this.sevenLable.Text = "+7";
+            // 
             // EmployeeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(313, 214);
+            this.ClientSize = new System.Drawing.Size(313, 220);
+            this.Controls.Add(this.sevenLable);
+            this.Controls.Add(this.phoneTypeLabel);
+            this.Controls.Add(this.phoneTypeCBox);
+            this.Controls.Add(this.phoneTextBox);
+            this.Controls.Add(this.phoneLabel);
             this.Controls.Add(this.GenderCombobox);
             this.Controls.Add(this.DateToTextbox);
             this.Controls.Add(this.DateToLabel);
@@ -239,5 +299,10 @@
         private System.Windows.Forms.TextBox DateToTextbox;
         private System.Windows.Forms.Label DateToLabel;
         private System.Windows.Forms.ComboBox GenderCombobox;
+        private System.Windows.Forms.TextBox phoneTextBox;
+        private System.Windows.Forms.Label phoneLabel;
+        private System.Windows.Forms.ComboBox phoneTypeCBox;
+        private System.Windows.Forms.Label phoneTypeLabel;
+        private System.Windows.Forms.Label sevenLable;
     }
 }
