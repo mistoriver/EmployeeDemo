@@ -57,9 +57,9 @@ insert into Employee_Documents values (3, 3, '1234432100', 1, getdate(), getdate
 insert into Phone_Types values (0, 'Домашний');
 insert into Phone_Types values (1, 'Мобильный');
 
-insert into Employee_Phones values ('9000000000',1,2);
-insert into Employee_Phones values ('9000000001',2,1);
-insert into Employee_Phones values ('9000000002',3,2);
+insert into Employee_Phones values (1,'9000000000',1,2);
+insert into Employee_Phones values (2,'9000000001',2,1);
+insert into Employee_Phones values (3,'9000000002',3,2);
 
 /*update Employee_Phones set employee_id = 9, phone_type = 1 where phone_number= 9000000000;
 
