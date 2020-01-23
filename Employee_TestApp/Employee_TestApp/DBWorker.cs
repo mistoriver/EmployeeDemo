@@ -144,7 +144,7 @@ namespace Employee_TestApp
                 if (reader.HasRows)
                 {
                     reader.Read();
-                    phone = new EmpPhone(reader[0].ToString(), reader[1].ToString(), reader[2].ToString());
+                    phone = new EmpPhone(reader[0].ToString(), reader[1].ToString(), reader[2].ToString(), reader[3].ToString());
                 }
                 connection.Close();
             }
@@ -158,7 +158,7 @@ namespace Employee_TestApp
 
             for (int i = 0; i < values.Length; i++)
             {
-                comText += values[i]; //$"@value{i}, ";
+                comText += $"{values[i]}, "; //$"@value{i}, ";
             }
             var lastPrep = comText.LastIndexOf(", ");
             if (lastPrep >= 0)
@@ -194,6 +194,37 @@ namespace Employee_TestApp
             DeleteData(tableName,idColumn,idValue);
             return InsertData(tableName,values);
         }
+        public static bool UpdateData(string tableName, string idColumn, string idValue, params (string column, string exactValue)[] dvalues)
+        {
+            var result = false;
+            var comText = $"update {tableName} set ";
+            foreach (var param in dvalues)
+            {
+                comText += $"{param.column} = {param.exactValue}, ";
+            }
+            var lastPrep = comText.LastIndexOf(", ");
+            if (lastPrep >= 0)
+                comText = comText.Remove(lastPrep, 2);
+            comText += $" where {idColumn} = {idValue}";
+            connection.Open();
+            SqlCommand com = new SqlCommand(comText, connection);
+            try 
+            { 
+                com.ExecuteNonQuery();
+                result = true;
+            }
+            catch (Exception e) 
+            {
+                MessageBox.Show(e.Message); 
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return result;
+        }
+
 
         public static void DeleteData(string tableName, string column, string exactValue)
         {

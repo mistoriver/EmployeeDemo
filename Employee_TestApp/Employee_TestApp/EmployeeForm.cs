@@ -38,45 +38,56 @@ namespace Employee_TestApp
                 DateFromTextbox.Text != "" && phoneTextBox.Text != "" &&
                 phoneTypeCBox.SelectedItem != null)
             {
-                var needToClose = true;
+                var allGood = true;
                 if (Emp == null)
                 {
                     var empId = DbWorker.GetMaxId("Employees", "employee_id") + 1;
-                    needToClose = DbWorker.InsertData("Employees",
+                    allGood = DbWorker.InsertData("Employees",
                         $"{empId}",
                         $"'{NameTextBox.Text}'", GenderCombobox.SelectedItem == "М" ? "1" : "0",
                         $"'{BirthDateTextbox.Text}'");
-                    if (needToClose)
-                        needToClose = DbWorker.InsertData("Employee_Documents", $"{empId}",
-                        $"{DbWorker.GetMaxId("Employee_Documents", "doc_id")}",
-                        $"{SeriesTextbox.Text.Concat(NumberTextbox.Text)}",
+
+                    var docId = DbWorker.GetMaxId("Employee_Documents", "doc_id")+1;
+                    if (allGood)
+                        allGood = DbWorker.InsertData("Employee_Documents", $"{empId}",
+                        $"{docId}",
+                        $"{SeriesTextbox.Text}{NumberTextbox.Text}",
                         $"{DocTypeCombobox.SelectedIndex}",
                         $"'{DateFromTextbox.Text}'",
                         $"'{DateToTextbox.Text}'");
-                    if (needToClose)
-                        needToClose = DbWorker.InsertData("Employee_Phones", $"{phoneTextBox.Text}", 
+                    var phoneId = DbWorker.GetMaxId("Employee_Phones", "phone_id")+1;
+                    if (allGood)
+                        allGood = DbWorker.InsertData("Employee_Phones", $"{phoneId}", 
+                        $"{phoneTextBox.Text}", 
                         $"{empId}",
                         $"{phoneTypeCBox.SelectedIndex}");
+                    else DbWorker.DeleteData("Employees", "employee_id", $"{empId}");//если плохо добавился док - надо удалить сотрудника
+                    if (!allGood)
+                    {
+                        DbWorker.DeleteData("Employees", "employee_id", $"{docId}");//если плохо добавился телефон - надо удалить и сотрудника
+                        DbWorker.DeleteData("Employee_Documents", "doc_id", $"{docId}");//и его документ
+                    } 
                 }
                 else
                 {
-                    needToClose = DbWorker.UpdateData("Employees", "employee_id", Emp.Id, $"{Emp.Id}",
-                        $"'{NameTextBox.Text}'",
-                        GenderCombobox.SelectedItem == "М" ? "1" : "0", $"'{BirthDateTextbox.Text}'");
-                    if (needToClose)
-                        needToClose = DbWorker.UpdateData("Employee_Documents", "doc_id", Doc.DocId,$"{Emp.Id}",
-                            $"{Doc.DocId}",
-                            $"{SeriesTextbox.Text.Concat(NumberTextbox.Text)}",
-                            $"{DocTypeCombobox.SelectedIndex}",
-                            $"'{DateFromTextbox.Text}'",
-                            $"'{DateToTextbox.Text}'");
-                    if (needToClose)
-                        needToClose = DbWorker.UpdateData("Employee_Phones", "phone_number", phoneTextBox.Text,$"{phoneTextBox.Text}", 
-                            $"{Emp.Id}",
-                            $"{phoneTypeCBox.SelectedIndex}");
+                    //для обновления это не нужно
+                    allGood = DbWorker.UpdateData("Employees", "employee_id", Emp.Id, 
+                        ("employee_name",$"'{NameTextBox.Text}'"),
+                        ("is_male",GenderCombobox.SelectedItem == "М" ? "1" : "0"), 
+                        ("birth_date",$"'{BirthDateTextbox.Text}'"));
+                    if (allGood)
+                        allGood = DbWorker.UpdateData("Employee_Documents", "doc_id", Doc.DocId,
+                            ("series_number",$"{SeriesTextbox.Text}{NumberTextbox.Text}"),
+                            ("doc_type",$"{DocTypeCombobox.SelectedIndex}"),
+                            ("from_date",$"'{DateFromTextbox.Text}'"),
+                            ("by_date",$"'{DateToTextbox.Text}'"));
+                    if (allGood)
+                        allGood = DbWorker.UpdateData("Employee_Phones", "phone_id", Phone.Id,
+                            ("phone_number",$"'{phoneTextBox.Text}'"),
+                            ("phone_type",$"{phoneTypeCBox.SelectedIndex}"));
                 }
 
-                if (needToClose) this.Close();
+                if (allGood) this.Close();
             }
             else MessageBox.Show("Заполнены не все поля!");
         }
@@ -90,7 +101,7 @@ namespace Employee_TestApp
         public void PutDocOnForm(Document doc)
         {
             if (doc == null) return;
-            DocTypeCombobox.SelectedIndex = Int32.Parse(doc.Type)-1; //я знаю, какая тут может появиться проблема
+            DocTypeCombobox.SelectedIndex = Int32.Parse(doc.Type); //я знаю, какая тут может появиться проблема
             SeriesTextbox.Text = doc.Series;
             NumberTextbox.Text = doc.Number;
             DateToTextbox.Text = doc.ToDate;
@@ -100,7 +111,7 @@ namespace Employee_TestApp
         public void PutPhoneOnForm(EmpPhone phone)
         {
             phoneTextBox.Text = phone.PhoneNumber;
-            phoneTypeCBox.SelectedIndex = Int32.Parse(phone.PhoneType)-1;
+            phoneTypeCBox.SelectedIndex = Int32.Parse(phone.PhoneType);
         }
 
         #region Validators
