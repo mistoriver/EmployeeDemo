@@ -1,0 +1,10 @@
+\\msk.mts.ru\ug\User\Folders\06\00\napopo20\My Documents\GitKraken\EmployeeDemo\RSHB_TestApp\RSHB_TestApp\bin\Debug\RSHB_TestApp.exe.config
+\\msk.mts.ru\ug\User\Folders\06\00\napopo20\My Documents\GitKraken\EmployeeDemo\RSHB_TestApp\RSHB_TestApp\bin\Debug\RSHB_TestApp.exe
+\\msk.mts.ru\ug\User\Folders\06\00\napopo20\My Documents\GitKraken\EmployeeDemo\RSHB_TestApp\RSHB_TestApp\bin\Debug\RSHB_TestApp.pdb
+\\msk.mts.ru\ug\User\Folders\06\00\napopo20\My Documents\GitKraken\EmployeeDemo\RSHB_TestApp\RSHB_TestApp\obj\Debug\RSHB_TestApp.Properties.Resources.resources
+\\msk.mts.ru\ug\User\Folders\06\00\napopo20\My Documents\GitKraken\EmployeeDemo\RSHB_TestApp\RSHB_TestApp\obj\Debug\Employee_TestApp.csproj.GenerateResource.cache
+\\msk.mts.ru\ug\User\Folders\06\00\napopo20\My Documents\GitKraken\EmployeeDemo\RSHB_TestApp\RSHB_TestApp\obj\Debug\RSHB_TestApp.exe
+\\msk.mts.ru\ug\User\Folders\06\00\napopo20\My Documents\GitKraken\EmployeeDemo\RSHB_TestApp\RSHB_TestApp\obj\Debug\RSHB_TestApp.pdb
+\\msk.mts.ru\ug\User\Folders\06\00\napopo20\My Documents\GitKraken\EmployeeDemo\RSHB_TestApp\RSHB_TestApp\obj\Debug\Employee_TestApp.EmployeeForm.resources
+\\msk.mts.ru\ug\User\Folders\06\00\napopo20\My Documents\GitKraken\EmployeeDemo\RSHB_TestApp\RSHB_TestApp\obj\Debug\Employee_TestApp.MainForm.resources
+\\msk.mts.ru\ug\User\Folders\06\00\napopo20\My Documents\GitKraken\EmployeeDemo\RSHB_TestApp\RSHB_TestApp\obj\Debug\Employee_TestApp.csprojAssemblyReference.cache

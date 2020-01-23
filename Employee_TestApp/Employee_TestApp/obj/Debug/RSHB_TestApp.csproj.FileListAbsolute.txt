@@ -1,0 +1,19 @@
+C:\Users\Моя белая Госпожа\source\repos\RSHB_TestApp\RSHB_TestApp\bin\Debug\RSHB_TestApp.exe.config
+C:\Users\Моя белая Госпожа\source\repos\RSHB_TestApp\RSHB_TestApp\bin\Debug\RSHB_TestApp.exe
+C:\Users\Моя белая Госпожа\source\repos\RSHB_TestApp\RSHB_TestApp\bin\Debug\RSHB_TestApp.pdb
+C:\Users\Моя белая Госпожа\source\repos\RSHB_TestApp\RSHB_TestApp\obj\Debug\RSHB_TestApp.csprojAssemblyReference.cache
+C:\Users\Моя белая Госпожа\source\repos\RSHB_TestApp\RSHB_TestApp\obj\Debug\RSHB_TestApp.MainForm.resources
+C:\Users\Моя белая Госпожа\source\repos\RSHB_TestApp\RSHB_TestApp\obj\Debug\RSHB_TestApp.Properties.Resources.resources
+C:\Users\Моя белая Госпожа\source\repos\RSHB_TestApp\RSHB_TestApp\obj\Debug\RSHB_TestApp.csproj.GenerateResource.cache
+C:\Users\Моя белая Госпожа\source\repos\RSHB_TestApp\RSHB_TestApp\obj\Debug\RSHB_TestApp.exe
+C:\Users\Моя белая Госпожа\source\repos\RSHB_TestApp\RSHB_TestApp\obj\Debug\RSHB_TestApp.pdb
+C:\Users\Моя белая Госпожа\source\repos\RSHB_TestApp\RSHB_TestApp\obj\Debug\RSHB_TestApp.EmployeeForm.resources
+\\msk.mts.ru\ug\User\Folders\06\00\napopo20\Downloads\RSKhB_test\РСХБ тест\RSHB_TestApp\RSHB_TestApp\bin\Debug\RSHB_TestApp.exe.config
+\\msk.mts.ru\ug\User\Folders\06\00\napopo20\Downloads\RSKhB_test\РСХБ тест\RSHB_TestApp\RSHB_TestApp\bin\Debug\RSHB_TestApp.exe
+\\msk.mts.ru\ug\User\Folders\06\00\napopo20\Downloads\RSKhB_test\РСХБ тест\RSHB_TestApp\RSHB_TestApp\bin\Debug\RSHB_TestApp.pdb
+\\msk.mts.ru\ug\User\Folders\06\00\napopo20\Downloads\RSKhB_test\РСХБ тест\RSHB_TestApp\RSHB_TestApp\obj\Debug\RSHB_TestApp.EmployeeForm.resources
+\\msk.mts.ru\ug\User\Folders\06\00\napopo20\Downloads\RSKhB_test\РСХБ тест\RSHB_TestApp\RSHB_TestApp\obj\Debug\RSHB_TestApp.MainForm.resources
+\\msk.mts.ru\ug\User\Folders\06\00\napopo20\Downloads\RSKhB_test\РСХБ тест\RSHB_TestApp\RSHB_TestApp\obj\Debug\RSHB_TestApp.Properties.Resources.resources
+\\msk.mts.ru\ug\User\Folders\06\00\napopo20\Downloads\RSKhB_test\РСХБ тест\RSHB_TestApp\RSHB_TestApp\obj\Debug\RSHB_TestApp.csproj.GenerateResource.cache
+\\msk.mts.ru\ug\User\Folders\06\00\napopo20\Downloads\RSKhB_test\РСХБ тест\RSHB_TestApp\RSHB_TestApp\obj\Debug\RSHB_TestApp.exe
+\\msk.mts.ru\ug\User\Folders\06\00\napopo20\Downloads\RSKhB_test\РСХБ тест\RSHB_TestApp\RSHB_TestApp\obj\Debug\RSHB_TestApp.pdb
