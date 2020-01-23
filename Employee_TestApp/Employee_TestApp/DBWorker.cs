@@ -7,7 +7,7 @@ using System.Windows.Forms;
 namespace Employee_TestApp
 {
     public delegate void ReadContentHandler(params object[] parameters);
-    public static class DBWorker
+    public static class DbWorker
     {
         #region IO Handlers
         private static ReadContentHandler _readContentHandler;
@@ -27,8 +27,28 @@ namespace Employee_TestApp
         }
         #endregion
 
-        private static string conString = @"Data Source=.\SQLEXPRESS;Initial Catalog=RSHB_TestDB;Integrated Security=True"; //Это стоило бы вынести в файл
-        private static SqlConnection connection = new SqlConnection(conString);
+        public static string conString { get; private set; }// @"Data Source=.\SQLExpress;Initial Catalog=Employee_TestDB;Trusted_Connection=True;";
+        private static SqlConnection connection ;//= new SqlConnection(conString);
+
+        
+
+        public static bool Check(string cs)
+        {
+            try
+            {
+                conString = cs;
+                connection = new SqlConnection(conString);
+                connection.Open();
+                connection.Close();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                return false;
+            }
+            return true;
+        }
+
         public static void GetActualData(ReadContentHandler handler)
         {
             AddReadHandler(handler);
@@ -38,7 +58,6 @@ namespace Employee_TestApp
             {
                 while (reader.Read())
                 {
-                    var dafuq = reader["is_male"].ToString();
                     _readContentHandler?.Invoke(reader["employee_id"], reader["employee_name"], (reader["is_male"].ToString().Contains("True")) ? "М" : "Ж", reader["birth_date"]);
                 }
             }
@@ -62,11 +81,27 @@ namespace Employee_TestApp
             RemoveReadHandler(handler);
         }
         
-        public static List<string> FillTypes()
+        public static List<string> FillDocTypes()
         {
             List<string> res = new List<string>();
             connection.Open();
             SqlDataReader reader = SelectData("Doc_Types");
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    res.Add(reader.GetString(1));
+                }
+            }
+            connection.Close();
+            return res;
+        }
+
+        public static List<string> FillPhoneTypes()
+        {
+            List<string> res = new List<string>();
+            connection.Open();
+            SqlDataReader reader = SelectData("Phone_Types");
             if (reader.HasRows)
             {
                 while (reader.Read())
@@ -97,21 +132,51 @@ namespace Employee_TestApp
             }
             return doc;
         }
-
-        public static void InsertData(string tableName, params object[] values)
+        public static EmpPhone GetPhone(string phoneNumber = null, string empId = null)
         {
-            var comText = $"insert into {tableName} values(";
-            foreach (var value in values)
+            EmpPhone phone = null;
+            if (phoneNumber != null || empId != null)
             {
-                comText += $"{value.ToString()}, ";
+                connection.Open();
+                
+                var par = phoneNumber == null ? ("employee_id", empId) : ("phone_number", phoneNumber);
+                SqlDataReader reader = SelectData("Employee_Phones", par);
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    phone = new EmpPhone(reader[0].ToString(), reader[1].ToString(), reader[2].ToString());
+                }
+                connection.Close();
+            }
+            return phone;
+        }
+
+        public static bool InsertData(string tableName, params object[] values)
+        {
+            var result = false;
+            var comText = $"insert into {tableName} values(";
+
+            for (int i = 0; i < values.Length; i++)
+            {
+                comText += values[i]; //$"@value{i}, ";
             }
             var lastPrep = comText.LastIndexOf(", ");
             if (lastPrep >= 0)
                 comText = comText.Remove(lastPrep, 2);
             comText += ")";
-            connection.Open();
+            
             SqlCommand com = new SqlCommand(comText, connection);
-            try { com.ExecuteScalar(); }
+           /* for (int i = 0; i < values.Length; i++)
+            {
+                var param = new SqlParameter($"@value{i}",values[i]);
+                com.Parameters.Add(param);
+            }*/
+            connection.Open();
+            try 
+            { 
+                com.ExecuteNonQuery();
+                result = true;
+            }
             catch (Exception e) 
             {
                 MessageBox.Show(e.Message); 
@@ -120,12 +185,14 @@ namespace Employee_TestApp
             {
                 connection.Close();
             }
+
+            return result;
         }
 
-        public static void UpdateData(string tableName, string idColumn, string idValue, params object[] values)
+        public static bool UpdateData(string tableName, string idColumn, string idValue, params object[] values)
         {
             DeleteData(tableName,idColumn,idValue);
-            InsertData(tableName,values);
+            return InsertData(tableName,values);
         }
 
         public static void DeleteData(string tableName, string column, string exactValue)
@@ -166,9 +233,11 @@ namespace Employee_TestApp
             var comText = $"select * from {tableName}";
             if (parameters?.Length > 0)
                 comText += " where ";
+            var i = 0;
             foreach (var param in parameters)
             {
                 comText += $"{param.column} like '%{param.substring}%' or ";
+                i++;
             }
 
             var lastOr = comText.LastIndexOf("or ");
@@ -176,6 +245,15 @@ namespace Employee_TestApp
                 comText = comText.Remove(lastOr, 3);
             
             SqlCommand com = new SqlCommand(comText, connection);
+            //com.Parameters.Add(new SqlParameter("@TableName", tableName));
+            
+            i = 0;
+            foreach (var param in parameters)
+            {
+                com.Parameters.AddWithValue($"@Column{i}", param.column);
+                com.Parameters.AddWithValue($"@Substring{i}", param.substring);
+                i++;
+            }
             reader = com.ExecuteReader();
             return reader;
         }
