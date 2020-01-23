@@ -55,9 +55,10 @@ namespace Employee_TestApp
                         $"{DocTypeCombobox.SelectedIndex}",
                         $"'{DateFromTextbox.Text}'",
                         $"'{DateToTextbox.Text}'");
-
+                    var phoneId = DbWorker.GetMaxId("Employee_Phones", "phone_id")+1;
                     if (allGood)
-                        allGood = DbWorker.InsertData("Employee_Phones", $"{phoneTextBox.Text}", 
+                        allGood = DbWorker.InsertData("Employee_Phones", $"{phoneId}", 
+                        $"{phoneTextBox.Text}", 
                         $"{empId}",
                         $"{phoneTypeCBox.SelectedIndex}");
                     else DbWorker.DeleteData("Employees", "employee_id", $"{empId}");//если плохо добавился док - надо удалить сотрудника
@@ -71,22 +72,19 @@ namespace Employee_TestApp
                 {
                     //для обновления это не нужно
                     allGood = DbWorker.UpdateData("Employees", "employee_id", Emp.Id, 
-                        $"{Emp.Id}",
-                        $"'{NameTextBox.Text}'",
-                        GenderCombobox.SelectedItem == "М" ? "1" : "0", $"'{BirthDateTextbox.Text}'");
+                        ("employee_name",$"'{NameTextBox.Text}'"),
+                        ("is_male",GenderCombobox.SelectedItem == "М" ? "1" : "0"), 
+                        ("birth_date",$"'{BirthDateTextbox.Text}'"));
                     if (allGood)
                         allGood = DbWorker.UpdateData("Employee_Documents", "doc_id", Doc.DocId,
-                            $"{Emp.Id}",
-                            $"{Doc.DocId}",
-                            $"{SeriesTextbox.Text}{NumberTextbox.Text}",
-                            $"{DocTypeCombobox.SelectedIndex}",
-                            $"'{DateFromTextbox.Text}'",
-                            $"'{DateToTextbox.Text}'");
+                            ("series_number",$"{SeriesTextbox.Text}{NumberTextbox.Text}"),
+                            ("doc_type",$"{DocTypeCombobox.SelectedIndex}"),
+                            ("from_date",$"'{DateFromTextbox.Text}'"),
+                            ("by_date",$"'{DateToTextbox.Text}'"));
                     if (allGood)
-                        allGood = DbWorker.UpdateData("Employee_Phones", "phone_number", phoneTextBox.Text,
-                            $"{phoneTextBox.Text}", 
-                            $"{Emp.Id}",
-                            $"{phoneTypeCBox.SelectedIndex}");
+                        allGood = DbWorker.UpdateData("Employee_Phones", "phone_id", Phone.Id,
+                            ("phone_number",$"'{phoneTextBox.Text}'"),
+                            ("phone_type",$"{phoneTypeCBox.SelectedIndex}"));
                 }
 
                 if (allGood) this.Close();

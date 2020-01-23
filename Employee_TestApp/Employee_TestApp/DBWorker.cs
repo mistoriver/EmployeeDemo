@@ -144,7 +144,7 @@ namespace Employee_TestApp
                 if (reader.HasRows)
                 {
                     reader.Read();
-                    phone = new EmpPhone(reader[0].ToString(), reader[1].ToString(), reader[2].ToString());
+                    phone = new EmpPhone(reader[0].ToString(), reader[1].ToString(), reader[2].ToString(), reader[3].ToString());
                 }
                 connection.Close();
             }
@@ -194,11 +194,11 @@ namespace Employee_TestApp
             DeleteData(tableName,idColumn,idValue);
             return InsertData(tableName,values);
         }
-        public static bool UpdateData(string tableName, string idColumn, string idValue, params (string column, string exactValue)[] values)
+        public static bool UpdateData(string tableName, string idColumn, string idValue, params (string column, string exactValue)[] dvalues)
         {
             var result = false;
             var comText = $"update {tableName} set ";
-            foreach (var param in values)
+            foreach (var param in dvalues)
             {
                 comText += $"{param.column} = {param.exactValue}, ";
             }
@@ -208,7 +208,6 @@ namespace Employee_TestApp
             comText += $" where {idColumn} = {idValue}";
             connection.Open();
             SqlCommand com = new SqlCommand(comText, connection);
-            connection.Open();
             try 
             { 
                 com.ExecuteNonQuery();
