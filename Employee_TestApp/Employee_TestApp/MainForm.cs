@@ -32,8 +32,16 @@ namespace Employee_TestApp
             if (e.RowIndex == -1) return;
             if (e.ColumnIndex == EmployeeDGV.Columns.Count-1)
             {
-                DbWorker.DeleteData("Employees", "employee_id", EmployeeDGV.Rows[e.RowIndex].Cells[0].Value.ToString());
-                EmployeeDGV.Rows.RemoveAt(e.RowIndex);
+                var res = MessageBox.Show(
+                    $"Вы уверены, что хотите НАВСЕГДА и ОТОВСЮДУ удалить данные о сотруднике \"{EmployeeDGV.Rows[e.RowIndex].Cells[1].Value}\"?",
+                    "Предупреждение", MessageBoxButtons.YesNo);
+                if (res == DialogResult.Yes)
+                {
+                    DbWorker.DeleteData("Employees", "employee_id",
+                        EmployeeDGV.Rows[e.RowIndex].Cells[0].Value.ToString());
+                    EmployeeDGV.Rows.RemoveAt(e.RowIndex);
+                }
+
                 return;
             }
             var stringRow = new string[] //я этим не горжусь :(

@@ -60,7 +60,6 @@
             this.EmployeeDGV.Size = new System.Drawing.Size(800, 395);
             this.EmployeeDGV.TabIndex = 1;
             this.EmployeeDGV.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Employee_CellOrItsContentContentClick);
-            this.EmployeeDGV.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Employee_CellOrItsContentContentClick);
             // 
             // EmployeeId
             // 
