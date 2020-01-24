@@ -17,6 +17,7 @@ namespace Employee_TestApp
             DbWorker.FillDocTypes().ForEach(type => DocTypeCombobox.Items.Add(type));
             DbWorker.FillPhoneTypes().ForEach(type => phoneTypeCBox.Items.Add(type));
             this.Text = "Создание пользователя";
+            SaveButton.Enabled = false;
         }
 
         public EmployeeForm(Employee emp) : this()
@@ -28,15 +29,52 @@ namespace Employee_TestApp
             Emp = emp;
             Phone = DbWorker.GetPhone(empId:emp.Id);
             PutPhoneOnForm(Phone);
+            SaveButton.Enabled = NotEmptyOrNull() && ProperlyFilled();
         }
+
+        private bool NotEmptyOrNull()
+        {
+            return NameTextBox.Text != "" && GenderCombobox.SelectedItem != null &&
+                   BirthDateTextbox.Text != "" &&
+                   DocTypeCombobox.SelectedItem != null
+                   && SeriesTextbox.Text != "" && NumberTextbox.Text != "" && DateToTextbox.Text != "" &&
+                   DateFromTextbox.Text != "" && phoneTextBox.Text != "" &&
+                   phoneTypeCBox.SelectedItem != null;
+        }
+
+        private bool ProperlyFilled()
+        { 
+            var lengths = BirthDateTextbox.Text.Length == 10 && DateToTextbox.Text.Length == 10 &&
+                   DateFromTextbox.Text.Length == 10 &&
+                   SeriesTextbox.Text.Length == 4 && NumberTextbox.Text.Length == 6;
+            var dates = false;
+            if (lengths)
+                try
+                {
+                    dates = DateTime.Parse(BirthDateTextbox.Text) < DateTime.Parse(DateFromTextbox.Text) &&
+                            DateTime.Parse(DateFromTextbox.Text) < DateTime.Parse(DateToTextbox.Text);
+                }
+                catch (Exception){}
+
+            return lengths && dates;
+        }
+
+        /*private DateTime ParseTbDate(TextBox tb)
+        {
+            try
+            {
+                return DateTime.Parse(tb.Text);
+            }
+            catch
+            {
+                MessageBox.Show($"Некорректная дата: {tb.Text}")
+            }
+        }*/
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            if (NameTextBox.Text != "" && GenderCombobox.SelectedItem != null && BirthDateTextbox.Text != "" &&
-                DocTypeCombobox.SelectedItem != null
-                && SeriesTextbox.Text != "" && NumberTextbox.Text != "" && DateToTextbox.Text != "" &&
-                DateFromTextbox.Text != "" && phoneTextBox.Text != "" &&
-                phoneTypeCBox.SelectedItem != null)
+            
+            if (NotEmptyOrNull())
             {
                 var allGood = true;
                 if (Emp == null)
@@ -44,7 +82,7 @@ namespace Employee_TestApp
                     var empId = DbWorker.GetMaxId("Employees", "employee_id") + 1;
                     allGood = DbWorker.InsertData("Employees",
                         $"{empId}",
-                        $"'{NameTextBox.Text}'", GenderCombobox.SelectedItem == "М" ? "1" : "0",
+                        $"'{NameTextBox.Text}'", GenderCombobox.SelectedItem.ToString() == "М" ? "1" : "0",
                         $"'{BirthDateTextbox.Text}'");
 
                     var docId = DbWorker.GetMaxId("Employee_Documents", "doc_id")+1;
@@ -73,7 +111,7 @@ namespace Employee_TestApp
                     //для обновления это не нужно
                     allGood = DbWorker.UpdateData("Employees", "employee_id", Emp.Id, 
                         ("employee_name",$"'{NameTextBox.Text}'"),
-                        ("is_male",GenderCombobox.SelectedItem == "М" ? "1" : "0"), 
+                        ("is_male",GenderCombobox.SelectedItem.ToString() == "М" ? "1" : "0"), 
                         ("birth_date",$"'{BirthDateTextbox.Text}'"));
                     if (allGood)
                         allGood = DbWorker.UpdateData("Employee_Documents", "doc_id", Doc.DocId,
@@ -92,13 +130,13 @@ namespace Employee_TestApp
             else MessageBox.Show("Заполнены не все поля!");
         }
 
-        public void PutEmployeeOnForm(Employee emp)
+        void PutEmployeeOnForm(Employee emp)
         {
             NameTextBox.Text = emp.Name;
             GenderCombobox.SelectedItem = emp.Gender;
             BirthDateTextbox.Text = emp.DateOfBirth.Split(' ')[0];
         }
-        public void PutDocOnForm(Document doc)
+        void PutDocOnForm(Document doc)
         {
             if (doc == null) return;
             DocTypeCombobox.SelectedIndex = Int32.Parse(doc.Type); //я знаю, какая тут может появиться проблема
@@ -108,90 +146,47 @@ namespace Employee_TestApp
             DateFromTextbox.Text = doc.FromDate;
 
         }
-        public void PutPhoneOnForm(EmpPhone phone)
+        void PutPhoneOnForm(EmpPhone phone)
         {
             phoneTextBox.Text = phone.PhoneNumber;
             phoneTypeCBox.SelectedIndex = Int32.Parse(phone.PhoneType);
         }
-
-        #region Validators
-
-        public void DateValidator(TextBox tb)
-        {
-            if  (tb.Text.Replace(".", "").Length > 8)
-                tb.Text = tb.Text.Substring(0,10);
-            if (tb.TextLength > 2 && tb.Text[2] != '.')
-                tb.Text = tb.Text.Insert(2, ".");
-            if (tb.TextLength > 5 && tb.Text[5] != '.')
-                tb.Text = tb.Text.Insert(5, ".");
-            var rx = new Regex(@"(^\d$|^\d{2}$|^\d{2}[.]$|^\d{2}[.]\d$|^\d{2}[.]\d{2}$|^\d{2}[.]\d{2}[.]$|^\d{2}[.]\d{2}[.]\d$|^\d{2}[.]\d{2}[.]\d{2}$|^\d{2}[.]\d{2}[.]\d{3}$|^\d{2}[.]\d{2}[.]\d{4}$)");
-            if (!rx.IsMatch(tb.Text))
-            {
-                string s = "";
-                foreach (Match match in new Regex(@"\d*").Matches(tb.Text))
-                {
-                    s += match.Value;
-                }
-                tb.Text = s;
-            }
-            tb.SelectionStart = tb.TextLength;
-        }
-
-        public void NumberValidator(TextBox tb)
-        {
-            if (!new Regex(@"^\d*$").IsMatch(tb.Text))
-            {
-                string s = "";
-                foreach (Match match in new Regex(@"(\d*|[.])").Matches(tb.Text))
-                {
-                    s += match.Value;
-                }
-                tb.Text = s;
-            }
-            tb.SelectionStart = tb.TextLength;
-        }
-
-        public void PhoneValidator(TextBox tb)
-        {
-            NumberValidator(tb);
-            if (tb.Text.Length > 10)
-            {
-                if (tb.Text[0] == '7') tb.Text = tb.Text.Substring(1);
-                tb.Text = tb.Text.Substring(0, 10);
-            }
-        }
-
-        #endregion
         
 
         private void BirthDateTextbox_TextChanged(object sender, EventArgs e)
         {
-            DateValidator(BirthDateTextbox);
+            Validator.DateValidator(BirthDateTextbox);
+            SaveButton.Enabled = NotEmptyOrNull() && ProperlyFilled();
         }
 
         private void SeriesTextbox_TextChanged(object sender, EventArgs e)
         {
-            NumberValidator(SeriesTextbox);
+            Validator.NumberValidator(SeriesTextbox);
+            SaveButton.Enabled = NotEmptyOrNull() && ProperlyFilled();
         }
 
         private void NumberTextbox_TextChanged(object sender, EventArgs e)
         {
-            NumberValidator(NumberTextbox);
+            Validator.NumberValidator(NumberTextbox);
+            SaveButton.Enabled = NotEmptyOrNull() && ProperlyFilled();
         }
 
         private void DateFromTextbox_TextChanged(object sender, EventArgs e)
         {
-            DateValidator(DateFromTextbox);
+            Validator.DateValidator(DateFromTextbox);
+            SaveButton.Enabled = NotEmptyOrNull() && ProperlyFilled();
         }
 
         private void DateToTextbox_TextChanged(object sender, EventArgs e)
         {
-            DateValidator(DateToTextbox);
+            Validator.DateValidator(DateToTextbox);
+            SaveButton.Enabled = NotEmptyOrNull() && ProperlyFilled();
         }
 
         private void phoneTextBox_TextChanged(object sender, EventArgs e)
         {
-            PhoneValidator(phoneTextBox);
+            Validator.PhoneValidator(phoneTextBox);
+            SaveButton.Enabled = NotEmptyOrNull() && ProperlyFilled();
         }
     }
 }
